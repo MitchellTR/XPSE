@@ -44,6 +44,7 @@ int letterButtonYOffset = 85;
 //----------------------------------------------------------------------------------
 void DrawWord();
 void setLetterPositions();
+int ClickCollides(int minX, int minY, int maxX, int maxY);
 
 // Gameplay Screen Initialization logic
 void InitGameplayScreen(void)
@@ -62,18 +63,40 @@ void UpdateGameplayScreen(void)
     // Press enter or tap to change to ENDING screen
     if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP) || IsKeyReleased(0))
     {
-        Vector2 clickPosition = GetMousePosition();
-        if(clickPosition.x>letterPositions[0].x-fontLarge.baseSize/5){
-            if(clickPosition.x<letterPositions[0].x+fontLarge.baseSize/5){
-                if(clickPosition.y>letterPositions[0].y-letterButtonYOffset-10-fontLarge.baseSize/5){
-                    if(clickPosition.y<letterPositions[0].y-letterButtonYOffset-10+fontLarge.baseSize/5){
-                        finishScreen = 1;
-                    }
-                }
-            }
+      for(int i=0;i<wordSize;i++){
+        if(ClickCollides(
+          letterPositions[i].x-fontLarge.baseSize/5,
+          letterPositions[i].y-letterButtonYOffset-10-fontLarge.baseSize/5,
+          letterPositions[i].x+fontLarge.baseSize/5,
+          letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5
+        ) == 1){
+          finishScreen = 1;
         }
+        if(ClickCollides(
+          letterPositions[i].x-fontLarge.baseSize/5,
+          letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5,
+          letterPositions[i].x+fontLarge.baseSize/5,
+          letterPositions[i].y+letterButtonYOffset-5+fontLarge.baseSize/5
+        ) == 1){
+          finishScreen = 1;
+        }
+      }
         //PlaySound(fxCoin);
     }
+}
+
+int ClickCollides(int minX, int minY, int maxX, int maxY){
+  Vector2 clickPosition = GetMousePosition();
+  if(clickPosition.x>minX){
+    if(clickPosition.x<maxX){
+      if(clickPosition.y>minY){
+        if(clickPosition.y<maxY){
+          return 1;
+        }
+      }
+    }
+  }
+  return 0;
 }
 
 // Gameplay Screen Draw logic
