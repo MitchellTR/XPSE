@@ -60,9 +60,18 @@ void UpdateGameplayScreen(void)
     // TODO: Update GAMEPLAY screen variables here!
 
     // Press enter or tap to change to ENDING screen
-    if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+    if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP) || IsKeyReleased(0))
     {
-        finishScreen = 1;
+        Vector2 clickPosition = GetMousePosition();
+        if(clickPosition.x>letterPositions[0].x-fontLarge.baseSize/5){
+            if(clickPosition.x<letterPositions[0].x+fontLarge.baseSize/5){
+                if(clickPosition.y>letterPositions[0].y-letterButtonYOffset-10-fontLarge.baseSize/5){
+                    if(clickPosition.y<letterPositions[0].y-letterButtonYOffset-10+fontLarge.baseSize/5){
+                        finishScreen = 1;
+                    }
+                }
+            }
+        }
         //PlaySound(fxCoin);
     }
 }
