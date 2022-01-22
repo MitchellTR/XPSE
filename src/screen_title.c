@@ -54,7 +54,7 @@ void UpdateTitleScreen(void)
     {
         //finishScreen = 1;   // OPTIONS
         finishScreen = 2;   // GAMEPLAY
-        PlaySound(fxCoin);
+        //PlaySound(fxCoin);
     }
 }
 
@@ -62,9 +62,11 @@ void UpdateTitleScreen(void)
 void DrawTitleScreen(void)
 {
     // TODO: Draw TITLE screen here!
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), GREEN);
-    DrawTextEx(font, "TITLE SCREEN", (Vector2){ 20, 10 }, font.baseSize*3, 4, DARKGREEN);
-    DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", 120, 220, 20, DARKGREEN);
+    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), SKYBLUE);
+    DrawTextEx(font, "XPSE", (Vector2){ 20, 20 }, 64, 2, BLACK);
+    char * startMessage = "PRESS ENTER or TAP TO PLAY";
+    Vector2 startMessageSize = MeasureTextEx(fontSmall, startMessage, 16, 2);
+    DrawTextEx(fontSmall, startMessage, (Vector2){GetScreenWidth()/2-startMessageSize.x/2, GetScreenHeight()/2-startMessageSize.y/2}, 16, 2, BLACK);
 }
 
 // Title Screen Unload logic

@@ -25,16 +25,24 @@
 
 #include "raylib.h"
 #include "screens.h"
+#include <string.h>
+#include <stdlib.h>
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
 //----------------------------------------------------------------------------------
 static int framesCounter = 0;
 static int finishScreen = 0;
+char * word = "WORDS";
+int wordSpacing = 100;
+int wordSize = 0;
+Vector2 * letterPositions;
 
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Definition
 //----------------------------------------------------------------------------------
+void DrawWord();
+void setLetterPositions();
 
 // Gameplay Screen Initialization logic
 void InitGameplayScreen(void)
@@ -42,6 +50,7 @@ void InitGameplayScreen(void)
     // TODO: Initialize GAMEPLAY screen variables here!
     framesCounter = 0;
     finishScreen = 0;
+    setLetterPositions();
 }
 
 // Gameplay Screen Update logic
@@ -53,7 +62,7 @@ void UpdateGameplayScreen(void)
     if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
     {
         finishScreen = 1;
-        PlaySound(fxCoin);
+        //PlaySound(fxCoin);
     }
 }
 
@@ -61,15 +70,39 @@ void UpdateGameplayScreen(void)
 void DrawGameplayScreen(void)
 {
     // TODO: Draw GAMEPLAY screen here!
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), PURPLE);
-    DrawTextEx(font, "GAMEPLAY SCREEN", (Vector2){ 20, 10 }, font.baseSize*3, 4, MAROON);
-    DrawText("PRESS ENTER or TAP to JUMP to ENDING SCREEN", 130, 220, 20, MAROON);
+    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), BEIGE);
+    //DrawTextEx(font, "GAMEPLAY SCREEN", (Vector2){ 20, 10 }, font.baseSize*3, 4, MAROON);
+    //DrawText("PRESS ENTER or TAP to JUMP to ENDING SCREEN", 130, 220, 20, MAROON);
+    DrawWord();
+}
+
+void DrawWord(){
+  for(int i=0;i<wordSize;i++){
+    char curLetter = word[i];
+    DrawTextEx(fontLarge,&curLetter,letterPositions[i],fontLarge.baseSize,0,BLACK);
+  }
+}
+
+void setLetterPositions(){
+  wordSize = strlen(word);
+  letterPositions = (Vector2 *) malloc(wordSize * sizeof(Vector2));
+  int wordSpaceWidth = wordSpacing * (wordSize-1);
+  int startingPoint = GetScreenWidth()/2 - wordSpaceWidth/2;
+
+  for(int i=0;i<wordSize;i++){
+    char curLetter = word[i];
+    Vector2 letterSize = MeasureTextEx(fontLarge,&curLetter,fontLarge.baseSize,0);
+    letterPositions[i].y=GetScreenHeight()/2-letterSize.y/2;
+    //int startingPoint = GetScreenWidth()/2-(wordSize/2) * wordSpacing;
+    letterPositions[i].x = startingPoint + wordSpacing * i - letterSize.x/2;
+  }
 }
 
 // Gameplay Screen Unload logic
 void UnloadGameplayScreen(void)
 {
     // TODO: Unload GAMEPLAY screen variables here!
+    free(letterPositions);
 }
 
 // Gameplay Screen should finish?
