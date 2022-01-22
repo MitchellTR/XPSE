@@ -16,11 +16,11 @@ _Copyright (c) 2014-2022 Ramon Santamaria ([@raysan5](https://twitter.com/raysan
 
 ## $(Game Title)
 
-![$(Game Title)](screenshots/screenshot000.png "$(Game Title)")
+![$(XPSE)](screenshots/screenshot000.png "$(Game Title)")
 
 ### Description
 
-$(Your Game Description)
+$(You're close to the password. Can you solve it?)
 
 ### Features
 
@@ -41,9 +41,7 @@ _TODO: Show your game to the world, animated GIFs recommended!._
 
 ### Developers
 
- - $(Developer 01) - $(Role/Tasks Developed)
- - $(Developer 02) - $(Role/Tasks Developed)
- - $(Developer 03) - $(Role/Tasks Developed)
+ - $(Todd Mitchell) - $(Designer/Developer)
 
 ### Links
 
@@ -57,4 +55,4 @@ This game sources are licensed under an unmodified zlib/libpng license, which is
 
 $(Additional Licenses)
 
-*Copyright (c) $(Year) $(User Name) ($(User Twitter/GitHub Name))*
+*Copyright (c) $(2022) $(Todd Mitchell) ($(@Mechatodzilla/MitchellTR))*
