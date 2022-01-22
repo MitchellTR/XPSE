@@ -37,6 +37,7 @@ char * word = "WORDS";
 int wordSpacing = 100;
 int wordSize = 0;
 Vector2 * letterPositions;
+int letterButtonYOffset = 85;
 
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Definition
@@ -74,12 +75,23 @@ void DrawGameplayScreen(void)
     //DrawTextEx(font, "GAMEPLAY SCREEN", (Vector2){ 20, 10 }, font.baseSize*3, 4, MAROON);
     //DrawText("PRESS ENTER or TAP to JUMP to ENDING SCREEN", 130, 220, 20, MAROON);
     DrawWord();
+
 }
 
 void DrawWord(){
   for(int i=0;i<wordSize;i++){
     char curLetter = word[i];
-    DrawTextEx(fontLarge,&curLetter,letterPositions[i],fontLarge.baseSize,0,BLACK);
+    Vector2 letterSize = MeasureTextEx(fontLarge,&curLetter,fontLarge.baseSize,0);
+    DrawTextEx(fontLarge,&curLetter,(Vector2){letterPositions[i].x-letterSize.x/2,letterPositions[i].y-letterSize.y/2},fontLarge.baseSize,0,BLACK);
+    DrawTriangle(
+      (Vector2){letterPositions[i].x,letterPositions[i].y-letterButtonYOffset-10-fontLarge.baseSize/5},
+      (Vector2){letterPositions[i].x-fontLarge.baseSize/5,letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5},
+      (Vector2){letterPositions[i].x+fontLarge.baseSize/5,letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5}, BLACK);
+    DrawTriangle(
+      (Vector2){letterPositions[i].x,letterPositions[i].y+letterButtonYOffset-5+fontLarge.baseSize/5},
+      (Vector2){letterPositions[i].x+fontLarge.baseSize/5,letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5},
+      (Vector2){letterPositions[i].x-fontLarge.baseSize/5,letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5},
+      BLACK);
   }
 }
 
@@ -88,13 +100,9 @@ void setLetterPositions(){
   letterPositions = (Vector2 *) malloc(wordSize * sizeof(Vector2));
   int wordSpaceWidth = wordSpacing * (wordSize-1);
   int startingPoint = GetScreenWidth()/2 - wordSpaceWidth/2;
-
   for(int i=0;i<wordSize;i++){
-    char curLetter = word[i];
-    Vector2 letterSize = MeasureTextEx(fontLarge,&curLetter,fontLarge.baseSize,0);
-    letterPositions[i].y=GetScreenHeight()/2-letterSize.y/2;
-    //int startingPoint = GetScreenWidth()/2-(wordSize/2) * wordSpacing;
-    letterPositions[i].x = startingPoint + wordSpacing * i - letterSize.x/2;
+    letterPositions[i].y=GetScreenHeight()/2;
+    letterPositions[i].x = startingPoint + wordSpacing * i;
   }
 }
 
