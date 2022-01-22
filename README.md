@@ -1,25 +1,21 @@
 
 
-## $(XPSE)
+## XPSE
 
-![$(XPSE)](screenshots/screenshot000.png "$(Game Title)")
+![XPSE](screenshots/screenshot000.png "$(Game Title)")
 
 ### Description
 
-$(You're close to the password. Can you solve it?)
+You're close to the password. Can you solve it?
 
 ### Features
 
  - $(Game Feature 01)
- - $(Game Feature 02)
- - $(Game Feature 03)
 
 ### Controls
 
 Keyboard:
  - $(Game Control 01)
- - $(Game Control 02)
- - $(Game Control 03)
 
 ### Screenshots
 
@@ -27,7 +23,7 @@ _TODO: Show your game to the world, animated GIFs recommended!._
 
 ### Developers
 
- - $(Todd Mitchell) - $(Designer/Developer)
+ - Todd Mitchell - Designer/Developer
 
 ### Links
 
@@ -41,4 +37,4 @@ This game sources are licensed under an unmodified zlib/libpng license, which is
 
 $(Additional Licenses)
 
-*Copyright (c) $(2022) $(Todd Mitchell) ($(@Mechatodzilla/MitchellTR))*
+*Copyright (c) 2022 Todd Mitchell | Twitter: Mechatodzilla | GitHub: MitchellTR*
