@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+*.js
+*.wasm
+
 # Object files
 *.o
 *.ko
@@ -50,5 +53,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-*.js
-*.wasm
