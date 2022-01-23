@@ -33,7 +33,8 @@
 //----------------------------------------------------------------------------------
 static int framesCounter = 0;
 static int finishScreen = 0;
-char * word = "WORDS";
+char word[] = "WORDS";
+char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 int wordSpacing = 100;
 int wordSize = 0;
 Vector2 * letterPositions;
@@ -45,6 +46,9 @@ int letterButtonYOffset = 85;
 void DrawWord();
 void setLetterPositions();
 int ClickCollides(int minX, int minY, int maxX, int maxY);
+void IncrementLetter(int index);
+void DecrementLetter(int index);
+int GetLetterIndex(char letter);
 
 // Gameplay Screen Initialization logic
 void InitGameplayScreen(void)
@@ -61,7 +65,7 @@ void UpdateGameplayScreen(void)
     // TODO: Update GAMEPLAY screen variables here!
 
     // Press enter or tap to change to ENDING screen
-    if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP) || IsKeyReleased(0))
+    if (IsMouseButtonReleased(0))// removed: IsGestureDetected(GESTURE_TAP) ||
     {
       for(int i=0;i<wordSize;i++){
         if(ClickCollides(
@@ -70,19 +74,43 @@ void UpdateGameplayScreen(void)
           letterPositions[i].x+fontLarge.baseSize/5,
           letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5
         ) == 1){
-          finishScreen = 1;
-        }
-        if(ClickCollides(
+          IncrementLetter(i);
+        }else if(ClickCollides(
           letterPositions[i].x-fontLarge.baseSize/5,
           letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5,
           letterPositions[i].x+fontLarge.baseSize/5,
           letterPositions[i].y+letterButtonYOffset-5+fontLarge.baseSize/5
         ) == 1){
-          finishScreen = 1;
+          DecrementLetter(i);
         }
       }
         //PlaySound(fxCoin);
     }
+}
+
+void IncrementLetter(int index){
+  if(word[index]=='Z'){
+    word[index]='A';
+  }else{
+    word[index]=alphabet[GetLetterIndex(word[index])+1];
+  }
+}
+
+void DecrementLetter(int index){
+  if(word[index]=='A'){
+    word[index]='Z';
+  }else{
+    word[index]=alphabet[GetLetterIndex(word[index])-1];
+  }
+}
+
+int GetLetterIndex(char letter){
+  for(int i = 0;i<26;i++){
+    if(alphabet[i]==letter){
+      return i;
+    }
+  }
+  return -1;
 }
 
 int ClickCollides(int minX, int minY, int maxX, int maxY){
