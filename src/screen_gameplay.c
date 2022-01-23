@@ -33,7 +33,8 @@
 //----------------------------------------------------------------------------------
 static int framesCounter = 0;
 static int finishScreen = 0;
-char word[] = "WORDS";
+char word[] = "XPSE";
+char password[] = "WORD";
 char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 int wordSpacing = 100;
 int wordSize = 0;
@@ -49,6 +50,7 @@ int ClickCollides(int minX, int minY, int maxX, int maxY);
 void IncrementLetter(int index);
 void DecrementLetter(int index);
 int GetLetterIndex(char letter);
+void CheckPassword();
 
 // Gameplay Screen Initialization logic
 void InitGameplayScreen(void)
@@ -75,6 +77,7 @@ void UpdateGameplayScreen(void)
           letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5
         ) == 1){
           IncrementLetter(i);
+          CheckPassword();
         }else if(ClickCollides(
           letterPositions[i].x-fontLarge.baseSize/5,
           letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5,
@@ -82,9 +85,23 @@ void UpdateGameplayScreen(void)
           letterPositions[i].y+letterButtonYOffset-5+fontLarge.baseSize/5
         ) == 1){
           DecrementLetter(i);
+          CheckPassword();
         }
       }
     }
+}
+
+void CheckPassword(){
+  int solved = 1;
+  for(int i=0;i<wordSize;i++){
+    if(word[i]!=password[i]){
+      solved = 0;
+      break;
+    }
+  }
+  if(solved==1){
+    finishScreen=1;
+  }
 }
 
 void IncrementLetter(int index){
