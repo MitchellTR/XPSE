@@ -42,6 +42,14 @@ int wordSize = 0;
 Vector2 * letterPositions;
 int letterButtonYOffset = 85;
 int easyDistance = 1;
+char * easyWords[] = {
+  "BALL","ABLE","CARD","DOOR", "EDGE", "FIRE",
+  "GOLD", "HIDE", "IDEA", "JOKE", "KING", "LIFE",
+  "MARK", "NAME", "OPEN", "PASS", "QUIP", "ROCK",
+  "STAR", "TEST", "USER", "VIEW", "WALL", "EXIT",
+  "YEAR", "TIME"
+};
+int easyWordsTotal = sizeof easyWords / sizeof easyWords[0];
 
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Definition
@@ -113,6 +121,8 @@ int PasswordSolved(){
 }
 
 void ScrambleWord(){
+  strcpy(password,easyWords[GetRandomValue(0,easyWordsTotal-1)]);
+  strcpy(word,password);
   for(int i=0;i<wordSize;i++){
     int increment = GetRandomValue(0,1);
     if(increment==1){
@@ -121,9 +131,7 @@ void ScrambleWord(){
       DecrementLetter(i);
     }
   }
-  for(int i=0;i<wordSize;i++){
-    scrambledWord[i] = word[i];
-  }
+  strcpy(scrambledWord,word);
 }
 
 void IncrementLetter(int index){
