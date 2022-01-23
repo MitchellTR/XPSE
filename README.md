@@ -31,10 +31,4 @@ _TODO: Show your game to the world, animated GIFs recommended!._
  - itch.io Release: $(itch.io Game Page)
  - Steam Release: $(Steam Game Page)
 
-### License
-
-This game sources are licensed under an unmodified zlib/libpng license, which is an OSI-certified, BSD-like license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
-
-$(Additional Licenses)
-
 *Copyright (c) 2022 Todd Mitchell | Twitter: Mechatodzilla | GitHub: MitchellTR*
