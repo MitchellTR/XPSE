@@ -33,13 +33,15 @@
 //----------------------------------------------------------------------------------
 static int framesCounter = 0;
 static int finishScreen = 0;
-char word[] = "XPSE";
+char word[] = "WORD";
 char password[] = "WORD";
+char scrambledWord[] = "WORD";
 char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 int wordSpacing = 100;
 int wordSize = 0;
 Vector2 * letterPositions;
 int letterButtonYOffset = 85;
+int easyDistance = 1;
 
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Definition
@@ -50,7 +52,8 @@ int ClickCollides(int minX, int minY, int maxX, int maxY);
 void IncrementLetter(int index);
 void DecrementLetter(int index);
 int GetLetterIndex(char letter);
-void CheckPassword();
+int PasswordSolved();
+void ScrambleWord();
 
 // Gameplay Screen Initialization logic
 void InitGameplayScreen(void)
@@ -59,6 +62,7 @@ void InitGameplayScreen(void)
     framesCounter = 0;
     finishScreen = 0;
     setLetterPositions();
+    ScrambleWord();
 }
 
 // Gameplay Screen Update logic
@@ -77,7 +81,9 @@ void UpdateGameplayScreen(void)
           letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5
         ) == 1){
           IncrementLetter(i);
-          CheckPassword();
+          if(PasswordSolved()==1){
+            finishScreen=1;
+          }
         }else if(ClickCollides(
           letterPositions[i].x-fontLarge.baseSize/5,
           letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5,
@@ -85,22 +91,38 @@ void UpdateGameplayScreen(void)
           letterPositions[i].y+letterButtonYOffset-5+fontLarge.baseSize/5
         ) == 1){
           DecrementLetter(i);
-          CheckPassword();
+          if(PasswordSolved()==1){
+            finishScreen=1;
+          }
         }
       }
     }
 }
 
-void CheckPassword(){
+int PasswordSolved(){
   int solved = 1;
   for(int i=0;i<wordSize;i++){
     if(word[i]!=password[i]){
-      solved = 0;
-      break;
+      return 0;
     }
   }
   if(solved==1){
-    finishScreen=1;
+    return 1;
+  }
+  return -1;
+}
+
+void ScrambleWord(){
+  for(int i=0;i<wordSize;i++){
+    int increment = GetRandomValue(0,1);
+    if(increment==1){
+      IncrementLetter(i);
+    }else{
+      DecrementLetter(i);
+    }
+  }
+  for(int i=0;i<wordSize;i++){
+    scrambledWord[i] = word[i];
   }
 }
 
