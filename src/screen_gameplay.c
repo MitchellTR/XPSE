@@ -50,6 +50,9 @@ char * easyWords[] = {
   "YEAR", "TIME"
 };
 int easyWordsTotal = sizeof easyWords / sizeof easyWords[0];
+int currentRangeMax = 0;
+int easyRangeMax = 2;
+int rangeIndexes[] = {-1,-1,-1,-1,-1,-1};
 
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Definition
@@ -69,6 +72,10 @@ void InitGameplayScreen(void)
     // TODO: Initialize GAMEPLAY screen variables here!
     framesCounter = 0;
     finishScreen = 0;
+
+    //set everything easy for now
+    currentRangeMax = easyRangeMax;
+
     setLetterPositions();
     ScrambleWord();
 }
@@ -123,6 +130,26 @@ int PasswordSolved(){
 void ScrambleWord(){
   strcpy(password,easyWords[GetRandomValue(0,easyWordsTotal-1)]);
   strcpy(word,password);
+
+  //TODO: For each letter, decide random position in range up to
+  //range limit. While alphabet position plus (range limit - range pos)
+  //is greater than 25, increment range position. While alpha position
+  //minus range pos is less than zero, decrement range position.
+  for(int i=0;i<wordSize;i++){
+    rangeIndexes[i]=GetRandomValue(0,currentRangeMax);
+    int alphaIndex = GetLetterIndex(word[i]);
+    while(alphaIndex<rangeIndexes[i]){
+      rangeIndexes[i]--;
+    }
+    while(alphaIndex+(currentRangeMax-rangeIndexes[i])>25){
+      rangeIndexes[i]++;
+    }
+  }
+
+  while(word[i]==password[i]){
+    
+  }
+
   for(int i=0;i<wordSize;i++){
     int increment = GetRandomValue(0,1);
     if(increment==1){
@@ -131,6 +158,7 @@ void ScrambleWord(){
       DecrementLetter(i);
     }
   }
+
   strcpy(scrambledWord,word);
 }
 
