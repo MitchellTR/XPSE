@@ -53,6 +53,7 @@ int easyWordsTotal = sizeof easyWords / sizeof easyWords[0];
 int currentRangeMax = 0;
 int easyRangeMax = 2;
 int rangeIndexes[] = {-1,-1,-1,-1,-1,-1};
+int rangePositions[] = {-1,-1,-1,-1,-1,-1};
 
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Definition
@@ -94,8 +95,9 @@ void UpdateGameplayScreen(void)
           letterPositions[i].y-letterButtonYOffset-10-fontLarge.baseSize/5,
           letterPositions[i].x+fontLarge.baseSize/5,
           letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5
-        ) == 1){
+        ) == 1 && rangePositions[i]<currentRangeMax){
           IncrementLetter(i);
+          rangePositions[i]++;
           if(PasswordSolved()==1){
             finishScreen=1;
           }
@@ -104,8 +106,9 @@ void UpdateGameplayScreen(void)
           letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5,
           letterPositions[i].x+fontLarge.baseSize/5,
           letterPositions[i].y+letterButtonYOffset-5+fontLarge.baseSize/5
-        ) == 1){
+        ) == 1 && rangePositions[i]>0){
           DecrementLetter(i);
+          rangePositions[i]--;
           if(PasswordSolved()==1){
             finishScreen=1;
           }
@@ -128,8 +131,8 @@ int PasswordSolved(){
 }
 
 void ScrambleWord(){
-  //strcpy(password,easyWords[GetRandomValue(0,easyWordsTotal-1)]);
-  strcpy(password,"XYZY");
+  strcpy(password,easyWords[GetRandomValue(0,easyWordsTotal-1)]);
+  //strcpy(password,"XYZY");
   strcpy(word,password);
 
   //For each letter, decide random position in range up to
@@ -145,8 +148,8 @@ void ScrambleWord(){
       rangeIndexes[i]++;
     }
     while(word[i]==password[i]){
-        int displayIndex = GetRandomValue(0,currentRangeMax);
-        int rangeDifference = rangeIndexes[i] - displayIndex;
+        rangePositions[i] = GetRandomValue(0,currentRangeMax);
+        int rangeDifference = rangeIndexes[i] - rangePositions[i];
         word[i]=alphabet[alphaIndex-rangeDifference];
     }
   }
@@ -207,15 +210,19 @@ void DrawWord(){
     char curLetter = word[i];
     Vector2 letterSize = MeasureTextEx(fontLarge,&curLetter,fontLarge.baseSize,0);
     DrawTextEx(fontLarge,&curLetter,(Vector2){letterPositions[i].x-letterSize.x/2,letterPositions[i].y-letterSize.y/2},fontLarge.baseSize,0,BLACK);
-    DrawTriangle(
-      (Vector2){letterPositions[i].x,letterPositions[i].y-letterButtonYOffset-10-fontLarge.baseSize/5},
-      (Vector2){letterPositions[i].x-fontLarge.baseSize/5,letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5},
-      (Vector2){letterPositions[i].x+fontLarge.baseSize/5,letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5}, BLACK);
-    DrawTriangle(
-      (Vector2){letterPositions[i].x,letterPositions[i].y+letterButtonYOffset-5+fontLarge.baseSize/5},
-      (Vector2){letterPositions[i].x+fontLarge.baseSize/5,letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5},
-      (Vector2){letterPositions[i].x-fontLarge.baseSize/5,letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5},
-      BLACK);
+    if(rangePositions[i]<currentRangeMax){
+      DrawTriangle(
+        (Vector2){letterPositions[i].x,letterPositions[i].y-letterButtonYOffset-10-fontLarge.baseSize/5},
+        (Vector2){letterPositions[i].x-fontLarge.baseSize/5,letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5},
+        (Vector2){letterPositions[i].x+fontLarge.baseSize/5,letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5}, BLACK);
+    }
+    if(rangePositions[i]>0){
+      DrawTriangle(
+        (Vector2){letterPositions[i].x,letterPositions[i].y+letterButtonYOffset-5+fontLarge.baseSize/5},
+        (Vector2){letterPositions[i].x+fontLarge.baseSize/5,letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5},
+        (Vector2){letterPositions[i].x-fontLarge.baseSize/5,letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5},
+        BLACK);
+    }
   }
 }
 
