@@ -128,13 +128,13 @@ int PasswordSolved(){
 }
 
 void ScrambleWord(){
-  strcpy(password,easyWords[GetRandomValue(0,easyWordsTotal-1)]);
+  //strcpy(password,easyWords[GetRandomValue(0,easyWordsTotal-1)]);
+  strcpy(password,"XYZY");
   strcpy(word,password);
 
-  //TODO: For each letter, decide random position in range up to
-  //range limit. While alphabet position plus (range limit - range pos)
-  //is greater than 25, increment range position. While alpha position
-  //minus range pos is less than zero, decrement range position.
+  //For each letter, decide random position in range up to
+  //range limit. Adjust range for edge cases. Move to random letter
+  //in range, repeat until random letter is not the correct letter.
   for(int i=0;i<wordSize;i++){
     rangeIndexes[i]=GetRandomValue(0,currentRangeMax);
     int alphaIndex = GetLetterIndex(word[i]);
@@ -144,18 +144,10 @@ void ScrambleWord(){
     while(alphaIndex+(currentRangeMax-rangeIndexes[i])>25){
       rangeIndexes[i]++;
     }
-  }
-
-  while(word[i]==password[i]){
-    
-  }
-
-  for(int i=0;i<wordSize;i++){
-    int increment = GetRandomValue(0,1);
-    if(increment==1){
-      IncrementLetter(i);
-    }else{
-      DecrementLetter(i);
+    while(word[i]==password[i]){
+        int displayIndex = GetRandomValue(0,currentRangeMax);
+        int rangeDifference = rangeIndexes[i] - displayIndex;
+        word[i]=alphabet[alphaIndex-rangeDifference];
     }
   }
 
@@ -207,7 +199,7 @@ void DrawGameplayScreen(void)
     // TODO: Draw GAMEPLAY screen here!
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), BEIGE);
     DrawWord();
-
+    DrawTextEx(fontSmall, password, (Vector2){5, 5}, 16, 2, BLACK);
 }
 
 void DrawWord(){
