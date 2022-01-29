@@ -68,7 +68,7 @@ int main(void)
     // Load global data (assets that must be available in all screens, i.e. font)
     font = LoadFontEx("resources/UbuntuTitling-Bold.ttf", 64, 0, 0);
     fontSmall = LoadFontEx("resources/UbuntuTitling-Bold.ttf", 16, 0, 0);
-    fontLarge = LoadFontEx("resources/UbuntuTitling-Bold.ttf", 128, 0, 0);
+    fontLarge = LoadFontEx("resources/UbuntuTitling-Bold.ttf", 100, 0, 0);
     //music = LoadMusicStream("resources/ambient.ogg");
     //fxCoin = LoadSound("resources/coin.wav");
 

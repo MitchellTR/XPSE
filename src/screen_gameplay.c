@@ -37,7 +37,8 @@ char word[] = "WORD";
 char password[] = "WORD";
 char scrambledWord[] = "WORD";
 char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-int wordSpacing = 100;
+int wordSpacing = 125;
+int verticalLetterSpacing = 100;
 int wordSize = 0;
 Vector2 * letterPositions;
 int letterButtonYOffset = 85;
@@ -54,6 +55,7 @@ int currentRangeMax = 0;
 int easyRangeMax = 2;
 int rangeIndexes[] = {-1,-1,-1,-1,-1,-1};
 int rangePositions[] = {-1,-1,-1,-1,-1,-1};
+int verticalLetterPositions[] = {0,0,0,0,0,0,0,0,0,0,0};
 
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Definition
@@ -66,6 +68,7 @@ void DecrementLetter(int index);
 int GetLetterIndex(char letter);
 int PasswordSolved();
 void ScrambleWord();
+void SetVerticalLetterPositions();
 
 // Gameplay Screen Initialization logic
 void InitGameplayScreen(void)
@@ -78,6 +81,7 @@ void InitGameplayScreen(void)
     currentRangeMax = easyRangeMax;
 
     setLetterPositions();
+    SetVerticalLetterPositions();
     ScrambleWord();
 }
 
@@ -153,7 +157,6 @@ void ScrambleWord(){
         word[i]=alphabet[alphaIndex-rangeDifference];
     }
   }
-
   strcpy(scrambledWord,word);
 }
 
@@ -200,29 +203,41 @@ int ClickCollides(int minX, int minY, int maxX, int maxY){
 void DrawGameplayScreen(void)
 {
     // TODO: Draw GAMEPLAY screen here!
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), BEIGE);
+    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), DARKGRAY);
     DrawWord();
-    DrawTextEx(fontSmall, password, (Vector2){5, 5}, 16, 2, BLACK);
+    DrawTextEx(fontSmall, password, (Vector2){5, 5}, 16, 2, WHITE);
 }
 
 void DrawWord(){
   for(int i=0;i<wordSize;i++){
     char curLetter = word[i];
     Vector2 letterSize = MeasureTextEx(fontLarge,&curLetter,fontLarge.baseSize,0);
-    DrawTextEx(fontLarge,&curLetter,(Vector2){letterPositions[i].x-letterSize.x/2,letterPositions[i].y-letterSize.y/2},fontLarge.baseSize,0,BLACK);
+    DrawCircle(letterPositions[i].x, letterPositions[i].y-5, fontLarge.baseSize/2, BLACK);
+    DrawTextEx(fontLarge,&curLetter,(Vector2){letterPositions[i].x-letterSize.x/2, letterPositions[i].y-letterSize.y/2},fontLarge.baseSize,0,WHITE);
     if(rangePositions[i]<currentRangeMax){
       DrawTriangle(
         (Vector2){letterPositions[i].x,letterPositions[i].y-letterButtonYOffset-10-fontLarge.baseSize/5},
         (Vector2){letterPositions[i].x-fontLarge.baseSize/5,letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5},
-        (Vector2){letterPositions[i].x+fontLarge.baseSize/5,letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5}, BLACK);
+        (Vector2){letterPositions[i].x+fontLarge.baseSize/5,letterPositions[i].y-letterButtonYOffset-10+fontLarge.baseSize/5}, WHITE);
     }
     if(rangePositions[i]>0){
       DrawTriangle(
         (Vector2){letterPositions[i].x,letterPositions[i].y+letterButtonYOffset-5+fontLarge.baseSize/5},
         (Vector2){letterPositions[i].x+fontLarge.baseSize/5,letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5},
         (Vector2){letterPositions[i].x-fontLarge.baseSize/5,letterPositions[i].y+letterButtonYOffset-5-fontLarge.baseSize/5},
-        BLACK);
+        WHITE);
     }
+    //for(int j=rangePositions[i]-1;j>=0;j--){
+      //char jLetter = alphabet[0];
+      //int jYPosition = verticalLetterPositions[4];
+      //Vector2 jLetterSize = MeasureTextEx(font,&jLetter,font.baseSize,0);
+      //DrawTextEx(font,&jLetter,(Vector2){letterPositions[i].x-jLetterSize.x/2,jYPosition-jLetterSize.y/2},font.baseSize,0,WHITE);
+    //}
+    char jLetter[2] = "z";
+    jLetter[0] = alphabet[GetLetterIndex(word[i])-1];
+    int jYPosition = verticalLetterPositions[4];
+    Vector2 jLetterSize = MeasureTextEx(font,&jLetter[0],font.baseSize,0);
+    DrawTextEx(font,&jLetter[0],(Vector2){letterPositions[i].x-jLetterSize.x/2,jYPosition-jLetterSize.y/2},font.baseSize,0,WHITE);
   }
 }
 
@@ -234,6 +249,16 @@ void setLetterPositions(){
   for(int i=0;i<wordSize;i++){
     letterPositions[i].y=GetScreenHeight()/2;
     letterPositions[i].x = startingPoint + wordSpacing * i;
+  }
+}
+
+void SetVerticalLetterPositions(){
+  verticalLetterPositions[5]=letterPositions[0].y;
+  for(int i=6;i<11;i++){
+    verticalLetterPositions[i]=verticalLetterPositions[5]+((i-5)*verticalLetterSpacing);
+  }
+  for(int i=4;i>=0;i--){
+    verticalLetterPositions[i]=verticalLetterPositions[5]-((5-i)*verticalLetterSpacing);
   }
 }
 
