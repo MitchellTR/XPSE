@@ -27,6 +27,7 @@ GameScreen currentScreen = 0;
 Font font = { 0 };
 Font fontSmall = { 0 };
 Font fontLarge = { 0 };
+int score = 0;
 //Music music = { 0 };
 //Sound fxCoin = { 0 };
 

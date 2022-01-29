@@ -38,6 +38,7 @@ extern GameScreen currentScreen;
 extern Font font;
 extern Font fontSmall;
 extern Font fontLarge;
+extern int score;
 //extern Music music;
 //extern Sound fxCoin;
 

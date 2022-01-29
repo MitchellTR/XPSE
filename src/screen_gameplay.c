@@ -83,6 +83,7 @@ void InitGameplayScreen(void)
     setLetterPositions();
     SetVerticalLetterPositions();
     ScrambleWord();
+    score=0;
 }
 
 // Gameplay Screen Update logic
@@ -102,6 +103,7 @@ void UpdateGameplayScreen(void)
         ) == 1 && rangePositions[i]<currentRangeMax){
           IncrementLetter(i);
           rangePositions[i]++;
+          score++;
           if(PasswordSolved()==1){
             finishScreen=1;
           }
@@ -113,6 +115,7 @@ void UpdateGameplayScreen(void)
         ) == 1 && rangePositions[i]>0){
           DecrementLetter(i);
           rangePositions[i]--;
+          score++;
           if(PasswordSolved()==1){
             finishScreen=1;
           }
@@ -205,7 +208,7 @@ void DrawGameplayScreen(void)
     // TODO: Draw GAMEPLAY screen here!
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), DARKGRAY);
     DrawWord();
-    //DrawTextEx(fontSmall, password, (Vector2){5, 5}, 16, 2, WHITE);
+    DrawTextEx(fontSmall, password, (Vector2){5, 5}, 16, 2, WHITE);
 }
 
 void DrawWord(){
