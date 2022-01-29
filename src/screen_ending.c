@@ -63,7 +63,7 @@ void DrawEndingScreen(void)
     // TODO: Draw ENDING screen here!
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), BLUE);
     DrawTextEx(font, "Puzzle Solved", (Vector2){ 20, 20 }, font.baseSize, 4, BLACK);
-    char * instruction = "PRESS ENTER or TAP to RETURN to TITLE SCREEN";
+    char * instruction = "TAP to RETURN to TITLE SCREEN";
     Vector2 instructionSize = MeasureTextEx(fontSmall,instruction,fontSmall.baseSize,1);
     DrawTextEx(fontSmall, instruction, (Vector2){GetScreenWidth()/2-instructionSize.x/2,GetScreenHeight()/2-instructionSize.y/2}, fontSmall.baseSize,1, DARKBLUE);
 }

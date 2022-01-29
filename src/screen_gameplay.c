@@ -205,7 +205,7 @@ void DrawGameplayScreen(void)
     // TODO: Draw GAMEPLAY screen here!
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), DARKGRAY);
     DrawWord();
-    DrawTextEx(fontSmall, password, (Vector2){5, 5}, 16, 2, WHITE);
+    //DrawTextEx(fontSmall, password, (Vector2){5, 5}, 16, 2, WHITE);
 }
 
 void DrawWord(){
@@ -233,11 +233,11 @@ void DrawWord(){
       //Vector2 jLetterSize = MeasureTextEx(font,&jLetter,font.baseSize,0);
       //DrawTextEx(font,&jLetter,(Vector2){letterPositions[i].x-jLetterSize.x/2,jYPosition-jLetterSize.y/2},font.baseSize,0,WHITE);
     //}
-    char jLetter[2] = "z";
-    jLetter[0] = alphabet[GetLetterIndex(word[i])-1];
-    int jYPosition = verticalLetterPositions[4];
-    Vector2 jLetterSize = MeasureTextEx(font,&jLetter[0],font.baseSize,0);
-    DrawTextEx(font,&jLetter[0],(Vector2){letterPositions[i].x-jLetterSize.x/2,jYPosition-jLetterSize.y/2},font.baseSize,0,WHITE);
+    //char jLetter[2] = "z";
+    //jLetter[0] = alphabet[GetLetterIndex(word[i])-1];
+    //int jYPosition = verticalLetterPositions[4];
+    //Vector2 jLetterSize = MeasureTextEx(font,&jLetter[0],font.baseSize,0);
+    //DrawTextEx(font,&jLetter[0],(Vector2){letterPositions[i].x-jLetterSize.x/2,jYPosition-jLetterSize.y/2},font.baseSize,0,WHITE);
   }
 }
 
