@@ -56,6 +56,8 @@ int easyRangeMax = 2;
 int rangeIndexes[] = {-1,-1,-1,-1,-1,-1};
 int rangePositions[] = {-1,-1,-1,-1,-1,-1};
 int verticalLetterPositions[] = {0,0,0,0,0,0,0,0,0,0,0};
+Sound fxChangeLetter;
+Sound fxPuzzleSolved;
 
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Definition
@@ -73,6 +75,9 @@ void SetVerticalLetterPositions();
 // Gameplay Screen Initialization logic
 void InitGameplayScreen(void)
 {
+    fxChangeLetter = LoadSound("resources/ChangeLetter.wav");
+    fxPuzzleSolved = LoadSound("resources/PuzzleSolved.wav");
+
     // TODO: Initialize GAMEPLAY screen variables here!
     framesCounter = 0;
     finishScreen = 0;
@@ -105,7 +110,10 @@ void UpdateGameplayScreen(void)
           rangePositions[i]++;
           score++;
           if(PasswordSolved()==1){
+            PlaySound(fxPuzzleSolved);
             finishScreen=1;
+          }else{
+            PlaySound(fxChangeLetter);
           }
         }else if(ClickCollides(
           letterPositions[i].x-fontLarge.baseSize/5,
@@ -117,7 +125,10 @@ void UpdateGameplayScreen(void)
           rangePositions[i]--;
           score++;
           if(PasswordSolved()==1){
+            PlaySound(fxPuzzleSolved);
             finishScreen=1;
+          }else{
+            PlaySound(fxChangeLetter);
           }
         }
       }
@@ -208,7 +219,7 @@ void DrawGameplayScreen(void)
     // TODO: Draw GAMEPLAY screen here!
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), DARKGRAY);
     DrawWord();
-    DrawTextEx(fontSmall, password, (Vector2){5, 5}, 16, 2, WHITE);
+    //DrawTextEx(fontSmall, password, (Vector2){5, 5}, 16, 2, WHITE); //For debugging: This will show the password
 }
 
 void DrawWord(){
@@ -270,6 +281,8 @@ void UnloadGameplayScreen(void)
 {
     // TODO: Unload GAMEPLAY screen variables here!
     free(letterPositions);
+    UnloadSound(fxPuzzleSolved);
+    UnloadSound(fxChangeLetter);
 }
 
 // Gameplay Screen should finish?

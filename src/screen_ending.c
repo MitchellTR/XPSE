@@ -53,7 +53,7 @@ void UpdateEndingScreen(void)
     // TODO: Update ENDING screen variables here!
 
     // Press enter or tap to return to TITLE screen
-    if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+    if (IsMouseButtonReleased(0))
     {
         finishScreen = 1;
         //PlaySound(fxCoin);
@@ -82,7 +82,7 @@ void DrawEndingScreen(void)
     }else{
         DrawCircleLines(circlesX+circleSpacing*2,circlesY,fontSmall.baseSize/2,BLACK);
     }
-    char * instruction = "TAP to RETURN to TITLE SCREEN";
+    char * instruction = "CLICK to RETURN to TITLE SCREEN";
     Vector2 instructionSize = MeasureTextEx(fontSmall,instruction,fontSmall.baseSize,1);
     DrawTextEx(fontSmall, instruction, (Vector2){GetScreenWidth()/2-instructionSize.x/2,GetScreenHeight()/2-instructionSize.y/2}, fontSmall.baseSize,1, DARKBLUE);
 }

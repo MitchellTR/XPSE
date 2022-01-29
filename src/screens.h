@@ -39,7 +39,7 @@ extern Font font;
 extern Font fontSmall;
 extern Font fontLarge;
 extern int score;
-//extern Music music;
+extern Music music;
 //extern Sound fxCoin;
 
 #ifdef __cplusplus

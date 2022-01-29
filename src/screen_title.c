@@ -42,6 +42,9 @@ void InitTitleScreen(void)
     // TODO: Initialize TITLE screen variables here!
     framesCounter = 0;
     finishScreen = 0;
+
+    SetMusicVolume(music, 0.75f);
+    PlayMusicStream(music);
 }
 
 // Title Screen Update logic
@@ -50,7 +53,7 @@ void UpdateTitleScreen(void)
     // TODO: Update TITLE screen variables here!
 
     // Press enter or tap to change to GAMEPLAY screen
-    if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+    if (IsMouseButtonReleased(0))
     {
         //finishScreen = 1;   // OPTIONS
         finishScreen = 2;   // GAMEPLAY
@@ -64,7 +67,7 @@ void DrawTitleScreen(void)
     // TODO: Draw TITLE screen here!
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), SKYBLUE);
     DrawTextEx(font, "XPSE", (Vector2){ 20, 20 }, font.baseSize, 2, BLACK);
-    char * startMessage = "TAP TO PLAY";
+    char * startMessage = "CLICK TO PLAY";
     Vector2 startMessageSize = MeasureTextEx(fontSmall, startMessage, 16, 2);
     DrawTextEx(fontSmall, startMessage, (Vector2){GetScreenWidth()/2-startMessageSize.x/2, GetScreenHeight()/2-startMessageSize.y/2}, 16, 2, BLACK);
 }

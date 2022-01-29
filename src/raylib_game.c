@@ -28,7 +28,7 @@ Font font = { 0 };
 Font fontSmall = { 0 };
 Font fontLarge = { 0 };
 int score = 0;
-//Music music = { 0 };
+Music music = { 0 };
 //Sound fxCoin = { 0 };
 
 //----------------------------------------------------------------------------------
@@ -70,11 +70,8 @@ int main(void)
     font = LoadFontEx("resources/UbuntuTitling-Bold.ttf", 64, 0, 0);
     fontSmall = LoadFontEx("resources/UbuntuTitling-Bold.ttf", 16, 0, 0);
     fontLarge = LoadFontEx("resources/UbuntuTitling-Bold.ttf", 100, 0, 0);
-    //music = LoadMusicStream("resources/ambient.ogg");
+    music = LoadMusicStream("resources/Storm-Clouds.ogg");
     //fxCoin = LoadSound("resources/coin.wav");
-
-    //SetMusicVolume(music, 1.0f);
-    //PlayMusicStream(music);
 
     // Setup and init first screen
     currentScreen = LOGO;
@@ -109,8 +106,7 @@ int main(void)
     UnloadFont(font);
     UnloadFont(fontSmall);
     UnloadFont(fontLarge);
-    //UnloadMusicStream(music);
-    //UnloadSound(fxCoin);
+    UnloadMusicStream(music);
 
     CloseAudioDevice();     // Close audio context
 
@@ -225,7 +221,7 @@ static void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-    //UpdateMusicStream(music);       // NOTE: Music keeps playing between screens
+    UpdateMusicStream(music);       // NOTE: Music keeps playing between screens
 
     if (!onTransition)
     {
