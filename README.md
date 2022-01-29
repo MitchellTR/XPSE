@@ -31,14 +31,16 @@ _TODO: Show your game to the world, animated GIFs recommended!._
 
 ### Licenses and tools
 
+ - Game code and design
+    - Copyright (c) 2022 Todd Mitchell (@MitchellTR)
  - raylib and the raylib game template
-  - Copyright (c) 2021-2022 Ramon Santamaria (@raysan5). raylib and the raylib game template are licensed under the Zlib license.
+    - Copyright (c) 2021-2022 Ramon Santamaria (@raysan5). raylib and the raylib game template are licensed under the Zlib license.
  - BGM
-  - Storm Clouds by Purrple Cat - https://purrplecat.com/. Music promoted by https://www.chosic.com/free-music/all/. Creative Commons CC BY-SA 3.0. https://creativecommons.org/licenses/by-sa/3.0/
+    - Storm Clouds by Purrple Cat - https://purrplecat.com/. Music promoted by https://www.chosic.com/free-music/all/. Creative Commons CC BY-SA 3.0. https://creativecommons.org/licenses/by-sa/3.0/
  - SFX
-  - Sound effects were generated using rFXGen: https://raylibtech.itch.io/rfxgen
+    - Sound effects were generated using rFXGen: https://raylibtech.itch.io/rfxgen
  - Font
-  - Font "Ubuntu-Titling" is licensed under GNU Lesser General Public License Version 3
+    - Font "Ubuntu-Titling" is licensed under GNU Lesser General Public License Version 3
  - Additional information in the LICENSE file
 
 *Copyright (c) 2022 Todd Mitchell | Twitter: Mechatodzilla | GitHub: MitchellTR*
